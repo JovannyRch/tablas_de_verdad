@@ -9,6 +9,18 @@ export class TemasPage implements OnInit {
 
   constructor() { }
 
+  temas: any = [
+    "Jerarquía de operadores",
+    "Operador AND ∧",
+    "Operador OR ∨",
+    "Operador NOT ¬",
+    "Operador IMPLICACIÓN ⇒",
+    "Operador BICONDICIONAL ⇔",
+    "Operador NAND ⊼",
+    "Operador NOR ↓",
+    "Operador XOR ⊻",
+  ]
+
   ngOnInit() {
   }
 

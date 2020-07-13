@@ -56,11 +56,11 @@ export class HomePage implements OnInit, AfterViewInit {
       isTesting: false,
       autoShow: true,
     };
-    //this.admobFree.banner.config(bannerConfig);
+    this.admobFree.banner.config(bannerConfig);
     //this.admobFree.rewardVideo.config(videoConfig);
 
 
-    // this.pushAdmob();
+    this.mostrarBanner();
 
     //this.mostrarVideo();
   }

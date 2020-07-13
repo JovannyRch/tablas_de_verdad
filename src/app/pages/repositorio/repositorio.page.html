@@ -1,9 +1,37 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>repositorio</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content *ngIf="!cargando">
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col size="4">
+        <ion-chip routerDirection="back" routerLink="/home" color="vibrant">
+          <ion-icon style="zoom:1.5;" name="arrow-back-outline"></ion-icon>
+        </ion-chip>
+      </ion-col>
+      <ion-col size="8">
+        <h4>Repositorio</h4>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-item detail *ngFor="let e of expresiones" (click)="verResultado(e.expresion,e.desc)">
+    <ion-card style="width: 100%;" no-border>
+      <ion-card-header>
 
-<ion-content>
+        <ion-card-title>{{e.expresion}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="e.desc">
+          <span>{{e.desc}}</span>
+          <br>
+        </div>
+        <i style="text-align: right;"><b>{{e.diagnostico}}</b></i>
+        <br />
+        <i style="text-align: right;">{{formatAMPM(e.fecha)}}</i>
 
+      </ion-card-content>
+    </ion-card>
+
+  </ion-item>
+</ion-content>
+
+<ion-content *ngIf="cargando" class="ion-text-center">
+  <ion-spinner name="bubbles" style="margin-top: 60%;"></ion-spinner>
 </ion-content>

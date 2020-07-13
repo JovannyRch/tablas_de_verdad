@@ -12,6 +12,10 @@ import { AdMobFree } from '@ionic-native/admob-free/ngx';
 import { AdmobFreeService } from './services/admobfree.service';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -19,7 +23,8 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
     StatusBar,
