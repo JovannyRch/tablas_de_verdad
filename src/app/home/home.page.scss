@@ -1,27 +1,78 @@
-#container {
-  text-align: center;
+.btn{
+  padding-top: 5%;
+ 
+  height: 7.5vh;
+  font-size: 1.5em;
+  padding-left: 4%;
+  border-radius: 5px;
+  vertical-align: middle;
+}
 
+.btn:hover{
+  background-color:rgba(226, 218, 209, 0.78);
+}
+
+.btn-fm{
+  padding-top: 10%;
+  padding-left: 4%;
+  border-radius: 5px;
+  vertical-align: middle;
+  background-color: rgb(253, 246, 228);
+}
+
+.vertical-center {
+  margin: 0;
   position: absolute;
-  left: 0;
-  right: 0;
   top: 50%;
+  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.btn-doble{
+  padding-top: 4vh;
+  height: 16vh;
+  font-size: 1.5em;
+  padding-left: 4%;
+  border-radius: 5px;
+  background-color: #f49338;
+  color: white;;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+.orange{
+  color: rgb(245, 147, 55);
 }
 
-#container a {
-  text-decoration: none;
+.btn-img{
+  padding-left: 4%;
+  border-radius: 5px;
+  vertical-align: middle;
+}
+
+.borde{
+  border: 1px solid rgb(226, 220, 205);
+}
+$base-color: rgba(250, 245, 239, 0.78);
+.barra-top{
+  background-color: $base-color;
+  .btn.btn-img{
+      margin-top: 0%;
+  }
+}
+
+.operadores{
+  
+  .btn{
+      font-size: 170%
+  }
+  background-color: $base-color;
+}
+
+.operador{
+  font-size: 170%;
+  line-height: 20px;
+  background-color: $base-color;
+}
+
+ion-chip{
+  border: 1px solid rgb(221, 109, 44);
 }

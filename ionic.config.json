@@ -1,5 +1,7 @@
 {
   "name": "app_tablas_de_verdad",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
