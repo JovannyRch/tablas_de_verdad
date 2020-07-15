@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Storage } from '@ionic/storage';
 import { ToastController, Platform, NavController } from '@ionic/angular';
@@ -7,9 +7,11 @@ import { RepositorioService } from "../../services/repositorio.service";
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
 import { Kmap } from './kmaps';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
 //import html2canvas from 'html2canvas';
 
-//import * as domtoimage from 'dom-to-image';
+import * as domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-resultado',
@@ -17,7 +19,7 @@ import { Kmap } from './kmaps';
   styleUrls: ['./resultado.page.scss'],
 })
 export class ResultadoPage implements OnInit {
-
+  @ViewChild('solucion') solucionDom;
   constructor(
     private activeRoute: ActivatedRoute,
     private storage: Storage,
@@ -27,11 +29,15 @@ export class ResultadoPage implements OnInit {
     private navCtrl: NavController,
     private repositorio: RepositorioService,
     private sanitizer: DomSanitizer,
+    private socialSharing: SocialSharing,
+
   ) { }
 
   expresion: any;
   guardarEnNube: boolean = false;
   descripcion: string = "";
+  imgSolution: any;
+  compartiendo: boolean = false;
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
       this.infija = params['infija'];
@@ -61,6 +67,33 @@ export class ResultadoPage implements OnInit {
     this.admobFree.rewardVideo.config(videoConfig);
     //this.admobFree.banner.config(bannerConfig);
     this.mostrarVideo();
+
+  }
+
+  ngAfterViewInit(): void {
+    console.log("Dom solution");
+    console.log(this.solucionDom);
+    //this.capturarSolucion()
+  }
+
+  capturarSolucion() {
+    if (this.compartiendo) return;
+    if (!this.mostrarProceso) this.mostrarProceso = true;
+    this.compartiendo = true;
+    setTimeout(() => {
+      domtoimage.toPng(this.solucionDom.nativeElement)
+        .then((dataUrl) => {
+          this.imgSolution = new Image();
+          this.imgSolution.src = dataUrl;
+          //console.log(dataUrl);
+          this.socialSharing.share("Tabla de verdad de: " + this.infijaOrg, "Tabla de verdad", this.imgSolution.src);
+          this.compartiendo = false;
+        })
+        .catch((error) => {
+          this.compartiendo = false;
+          console.error('oops, something went wrong!', error);
+        })
+    }, 1000);
   }
 
   mostrarVideo() {

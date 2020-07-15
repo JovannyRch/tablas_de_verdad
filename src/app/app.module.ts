@@ -13,8 +13,10 @@ import { AdmobFreeService } from './services/admobfree.service';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
+
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { File } from "@ionic-native/file/ngx";
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +34,8 @@ import { environment } from 'src/environments/environment';
     AdMobFree,
     AdmobFreeService,
     AppVersion,
+    SocialSharing,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

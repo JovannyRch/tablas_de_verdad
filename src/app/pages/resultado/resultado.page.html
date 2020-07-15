@@ -1,5 +1,5 @@
 <ion-content *ngIf="!guardarEnNube">
-  <div *ngIf="ok" class="ion-padding" id="solucion">
+  <div *ngIf="!compartiendo">
     <ion-item>
 
       <ion-chip (click)="regresar()" color="vibrant">
@@ -53,6 +53,20 @@
       </ion-button>
     </div>
 
+  </div>
+  <div *ngIf="compartiendo">
+    <div class="ion-text-center">
+      <ion-button fill="clear" color="vibrant">
+        <ion-icon slot="start" name="camera"></ion-icon>
+        <br />
+        Capturando solución :D
+      </ion-button>
+    </div>
+  </div>
+
+
+  <div *ngIf="ok" class="ion-padding" id="solucion" #solucion style="background-color: white;">
+
 
 
     <div *ngIf="desc">
@@ -72,7 +86,7 @@
 
     <ion-grid fixed class="ion-text-center">
 
-      <ion-row>
+      <ion-row *ngIf="!compartiendo">
         <ion-col size="12">
           <ion-button (click)="cambiar01()" color="light">
             <span *ngIf="!conVsFs">0/1</span>
@@ -81,7 +95,11 @@
         </ion-col>
 
       </ion-row>
-
+      <div class="ion-text-right" *ngIf="!compartiendo">
+        <ion-button (click)="capturarSolucion()" fill="clear" color="vibrant">
+          <ion-icon slot="start" name="share-social-sharp"></ion-icon> Compartir
+        </ion-button>
+      </div>
 
       <table>
         <thead>
@@ -104,7 +122,7 @@
         <ion-label class="ion-text-center"><b>{{ multiplicacion }}</b></ion-label>
       </ion-item>
 
-      <ion-row>
+      <ion-row *ngIf="!compartiendo">
         <ion-col size="12">
           <br><br>
           <ion-chip class="ion-text-center"
@@ -115,13 +133,10 @@
               <span *ngIf="mostrarProceso">Ocultar proceso</span>
             </ion-label>
           </ion-chip>
-
-
-
-
         </ion-col>
       </ion-row>
-
+      <br *ngIf="!compartiendo" />
+      <br *ngIf="!compartiendo" />
     </ion-grid>
 
 
@@ -156,11 +171,25 @@
 
     </div>
 
-
+    <div *ngIf="compartiendo" class="ion-text-right">
+      <br>
+      <br>
+      <br>
+      <img src="/assets/img/icon.png" height="40px">
+      <br />
+      <b>Tablas de Verdad</b>
+      <br />
+      <b><i>J19 Software</i></b>
+      <small>
+        <br />
+        <i>jovannyrch@gmail.com</i>
+      </small>
+    </div>
 
 
 
   </div>
+
 </ion-content>
 
 <ion-content *ngIf="guardarEnNube" class="ion-padding">

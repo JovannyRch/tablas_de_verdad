@@ -269,7 +269,7 @@ export class Kmap {
     buildSuma(functions: any) {
         let aux = [];
         for (let f of functions) {
-            console.log("f", f);
+            //console.log("f", f);
             if (f.length > 1) {
                 aux.push(`(${f.join(this.andOperator)})`)
             }
@@ -283,10 +283,10 @@ export class Kmap {
     }
 
     buildMultiplicacion(functions: any) {
-        console.log(functions);
+        //console.log(functions);
         let aux = [];
         for (let f of functions) {
-            console.log("f", f);
+            //console.log("f", f);
             if (f.length > 1) {
                 aux.push(`(${f.join(this.orOperator)})`)
             }

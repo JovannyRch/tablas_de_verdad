@@ -57,12 +57,11 @@ export class HomePage implements OnInit, AfterViewInit {
       autoShow: true,
     };
     this.admobFree.banner.config(bannerConfig);
-    //this.admobFree.rewardVideo.config(videoConfig);
+    this.admobFree.rewardVideo.config(videoConfig);
 
 
     this.mostrarBanner();
-
-    //this.mostrarVideo();
+    this.mostrarVideo();
   }
 
   mostrarBanner() {
@@ -70,7 +69,7 @@ export class HomePage implements OnInit, AfterViewInit {
     this.admobFree.banner.prepare()
       .then(() => {
         this.admobFree.banner.show();
-        console.log("show banner");
+        //console.log("show banner");
       });
   }
 
