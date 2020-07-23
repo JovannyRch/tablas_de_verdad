@@ -1,11 +1,12 @@
 .btn{
   padding-top: 5%;
  
-  height: 7.5vh;
+  height: 6.4vh;
   font-size: 1.5em;
   padding-left: 4%;
   border-radius: 5px;
   vertical-align: middle;
+  text-align: center;
 }
 
 .btn:hover{
@@ -30,7 +31,7 @@
 
 .btn-doble{
   padding-top: 4vh;
-  height: 16vh;
+  height: 13vh;
   font-size: 1.5em;
   padding-left: 4%;
   border-radius: 5px;
@@ -46,6 +47,7 @@
   padding-left: 4%;
   border-radius: 5px;
   vertical-align: middle;
+  top: 4;
 }
 
 .borde{
@@ -75,4 +77,10 @@ $base-color: rgba(250, 245, 239, 0.78);
 
 ion-chip{
   border: 1px solid rgb(221, 109, 44);
+}
+
+
+.my-custom-class {
+  --background: red;
+  color: green;
 }

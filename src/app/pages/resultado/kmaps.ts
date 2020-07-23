@@ -332,12 +332,12 @@ export class Kmap {
         let res = [];
         //console.log("bin", bin);
         for (let i = 0; i < bin.length; i++) {
-            if (this.varsUsed.indexOf(this.variables[i]) < 0) {
+            if (this.varsUsed.indexOf(this.variables2[i]) < 0) {
 
-                this.varsUsed.push(this.variables[i]);
+                this.varsUsed.push(this.variables2[i]);
             }
-            if (bin[i] == "1") res.push(this.variables[i]);
-            else if (bin[i] == "0") res.push(this.notOperator + this.variables[i]);
+            if (bin[i] == "1") res.push(this.variables2[i]);
+            else if (bin[i] == "0") res.push(this.notOperator + this.variables2[i]);
         }
         return res;
     }

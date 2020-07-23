@@ -54,25 +54,26 @@ export class ResultadoPage implements OnInit {
       }
     });
 
-    /* const bannerConfig: AdMobFreeBannerConfig = {
+    const bannerConfig: AdMobFreeBannerConfig = {
       id: 'ca-app-pub-4665787383933447/6762703339',
       isTesting: false,
       autoShow: true,
-    }; */
+    };
     const videoConfig: AdMobFreeBannerConfig = {
       id: 'ca-app-pub-4665787383933447/1334937592',
       isTesting: false,
       autoShow: true,
     };
     this.admobFree.rewardVideo.config(videoConfig);
-    //this.admobFree.banner.config(bannerConfig);
+    this.admobFree.banner.config(bannerConfig);
     this.mostrarVideo();
+    this.mostrarBanner();
 
   }
 
   ngAfterViewInit(): void {
-    console.log("Dom solution");
-    console.log(this.solucionDom);
+    //console.log("Dom solution");
+    //console.log(this.solucionDom);
     //this.capturarSolucion()
   }
 
@@ -102,6 +103,15 @@ export class ResultadoPage implements OnInit {
         this.admobFree.rewardVideo.show();
       });
   }
+  mostrarBanner() {
+
+    this.admobFree.banner.prepare()
+      .then(() => {
+        this.admobFree.banner.show();
+        //console.log("show banner");
+      });
+  }
+
 
 
   activarGuardarEnNube() {
@@ -136,14 +146,14 @@ export class ResultadoPage implements OnInit {
   historialOperaciones = [];
   keysOperaciones = [];
   variables: string[] = [];
-  operadores: string = "∨∧¬!&|()⇔⇒⊼⊻↓⊕";
+  operadores: string = "∨∧¬!&|()⇔⇒⊼⊻↓⊕￩⇏⇎⇍┹┲";
   simplificacion: string = "";
   suma: string = "";
   multiplicacion: string = "";
   miniterminos: number[] = [];
   maxiterminos: number[] = [];
 
-  opr2var: string = "∨∧⇔⇒⊼⊻↓⊕|&";
+  opr2var: string = "∨∧⇔⇒⊼⊻↓⊕|&￩⇏⇎⇍┹┲";
   varMays: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   varNames: string = this.varMays + this.varMays.toLowerCase();
   notOperator: string = "";
@@ -335,18 +345,28 @@ export class ResultadoPage implements OnInit {
     this.infijaAux = this.infija;
     let prec = {};
     // "∨∧¬!&|()⇔⇒⊼⊻↓⊕"
-    prec["!"] = 9;
-    prec["¬"] = 9;
-    prec["⊼"] = 8;
-    prec["⊻"] = 7;
-    prec["⊕"] = 6;
-    prec["↓"] = 5;
-    prec["&"] = 4;
-    prec["∧"] = 4;
-    prec["|"] = 3;
-    prec["∨"] = 3;
+    prec["!"] = 15;
+    prec["¬"] = 15;
+    prec["⊼"] = 14;
+    prec["⊻"] = 13;
+    prec["⊕"] = 12;
+    prec["↓"] = 11;
+    prec["&"] = 10;
+    prec["∧"] = 10;
+    prec["|"] = 9;
+    prec["∨"] = 9;
+    prec['⇍'] = 8;
+
+    prec['￩'] = 7;
+    prec['⇏'] = 6;
+    prec['⇎'] = 5;
+    prec['⇎'] = 5;
+    prec['┲'] = 4;
+    prec['┹'] = 3;
+
     prec["⇒"] = 2;
     prec["⇔"] = 1;
+
     prec["("] = 0;
 
     let opStack = [];
@@ -445,10 +465,27 @@ export class ResultadoPage implements OnInit {
           }
           else if (["⊼"].includes(c)) {
             nombre = "NAND";
+          } else if (['￩'].includes(c)) {
+            nombre = "Condicional inverso/Replicador";
           }
 
           else if (["⊻", "⊕"].includes(c)) {
-            nombre = "XOR";
+            nombre = "XOR/Disyunción exclusiva";
+          }
+          else if (['⇍'].includes(c)) {
+            nombre = "Negación del condicional inverso";
+          }
+          else if (['⇏'].includes(c)) {
+            nombre = "Negación del condicional";
+          }
+          else if (['⇎'].includes(c)) {
+            nombre = "Negación del bicondicional/XOR";
+          }
+          else if (['┲'].includes(c)) {
+            nombre = "Tautología";
+          }
+          else if (['┹'].includes(c)) {
+            nombre = "Contradicción";
           }
           htmlOper = ` ${b}<span class="operador-chido"> ${operator} </span>${a}`;
           oper = b + operator + a;
@@ -561,8 +598,8 @@ export class ResultadoPage implements OnInit {
       this.diagnostico = "Contingencia";
     }
 
-
-    if (this.miniterminos.length >= 2) {
+    console.log("variables: ", this.variables);
+    if (this.miniterminos.length >= 1) {
 
       let kmap = new Kmap(this.miniterminos, this.variables);
       this.suma = kmap.suma;
@@ -570,6 +607,7 @@ export class ResultadoPage implements OnInit {
     }
     if (this.maxiterminos.length >= 1) {
       let kmap2 = new Kmap(this.maxiterminos, this.variables);
+
       this.multiplicacion = `¬[${kmap2.suma}]`;
     }
     /*  if (this.modo == 2) {
@@ -657,6 +695,31 @@ export class ResultadoPage implements OnInit {
           else if (["⊻", "⊕"].includes(c)) {
             resultado = this.xor(b, a);
           }
+          else if (['￩'].includes(c)) {
+            resultado = this.replicador(b, a);
+          }
+          else if (['⇏'].includes(c)) {
+            resultado = this.not(this.condicional(b, a));
+          }
+          else if (['⇍'].includes(c)) {
+            resultado = this.not(this.replicador(b, a));
+          }
+          else if (['⇎'].includes(c)) {
+            resultado = this.not(this.bicondicional(b, a));
+          }
+          else if (['⇎'].includes(c)) {
+            resultado = this.not(this.bicondicional(b, a));
+          }
+          else if (['⇎'].includes(c)) {
+            resultado = this.not(this.bicondicional(b, a));
+          }
+          else if (['┲'].includes(c)) {
+            resultado = 1;
+          }
+          else if (['┹'].includes(c)) {
+            resultado = 0;
+          }
+
 
         }
         if (["!", "¬"].includes(c)) {
@@ -727,6 +790,19 @@ export class ResultadoPage implements OnInit {
     return res + lastC;
   }
 
+  replicador(a, b) {
+    if (a == 0 && b == 1) return 0;
+    return 1;
+  }
+
+
+  tautologia(a, b) {
+    return 1;
+  }
+
+  contradiccion(a, b) {
+    return 0;
+  }
 
   or(a, b) {
     if (a == 1 || b == 1) return 1;

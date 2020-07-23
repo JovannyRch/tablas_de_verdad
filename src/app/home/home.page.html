@@ -49,7 +49,7 @@
               <ion-col (click)="clear()" size="3" class="borde btn orange">
                 <ion-icon style="zoom:1.5;" name="trash" style="padding-top: 10%"></ion-icon>
               </ion-col>
-              <ion-col (click)="delete()" size="3" class="borde btn-img ion-text-center">
+              <ion-col (click)="delete()" size="3" class="borde btn-img ion-text-center ion-justify-content-center">
                 <ion-img src="assets/img/delete.png" style="width: 60%; margin-left: 10%"></ion-img>
               </ion-col>
               <ion-col (click)="clickVar('(')" size="3" class="borde btn">(</ion-col>
@@ -71,10 +71,16 @@
 
             </ion-row>
             <ion-row class="operadores">
-              <ion-col class="btn borde" (click)="clickVar('⊕')" style="font-size: 100%" size="3">⊕</ion-col>
-              <ion-col class="btn borde" (click)="clickVar('⊻')" style="font-size: 100%" size="3">⊻</ion-col>
-              <ion-col class="btn borde" (click)="clickVar('⊼')" style="font-size: 100%" size="3">⊼</ion-col>
-              <ion-col class="btn borde" (click)="clickVar('↓')" style="font-size: 100%" size="3">↓</ion-col>
+              <ion-col class="btn borde" (click)="clickVar('⊕')" style="font-size: 130%" size="3">⊕</ion-col>
+              <ion-col class="btn borde" (click)="clickVar('⊻')" style="font-size: 130%" size="3">⊻</ion-col>
+              <ion-col class="btn borde" (click)="clickVar('⊼')" style="font-size: 130%" size="3">⊼</ion-col>
+              <ion-col class="btn borde" (click)="clickVar('↓')" style="font-size: 130%" size="3">↓</ion-col>
+            </ion-row>
+            <ion-row class="operadores">
+              <ion-col class="btn borde" (click)="clickVar('⇏')" style="font-size: 130%" size="3">⇏</ion-col>
+              <ion-col class="btn borde" (click)="clickVar('⇍')" style="font-size: 130%" size="3">⇍</ion-col>
+              <ion-col class="btn borde" (click)="clickVar('┲')" style="font-size: 130%" size="3">┲</ion-col>
+              <ion-col class="btn borde" (click)="clickVar('┹')" style="font-size: 130%" size="3">┹</ion-col>
             </ion-row>
 
           </ion-grid>
@@ -102,6 +108,8 @@
             </ion-col>
 
             <ion-col class="btn borde" (click)="clickVar('⇒')" size="12">⇒</ion-col>
+
+            <ion-col class="btn borde" (click)="clickVar('￩')" size="12">￩</ion-col>
             <ion-col class="btn-doble borde" (click)="verResultado()" size="12">=</ion-col>
           </ion-row>
         </ion-col>

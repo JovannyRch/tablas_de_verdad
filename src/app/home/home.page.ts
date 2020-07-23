@@ -27,6 +27,8 @@ export class HomePage implements OnInit, AfterViewInit {
       //statusBar.styleDefault();
       //splashScreen.hide();
       //this.pushAdmob();
+      this.mostrarBanner();
+      this.mostrarVideo();
     });
     this.backButtonEvent();
   }
@@ -60,8 +62,7 @@ export class HomePage implements OnInit, AfterViewInit {
     this.admobFree.rewardVideo.config(videoConfig);
 
 
-    this.mostrarBanner();
-    this.mostrarVideo();
+
   }
 
   mostrarBanner() {
@@ -88,8 +89,8 @@ export class HomePage implements OnInit, AfterViewInit {
   indexPuntero = 0;
 
   variables: string[] = [];
-  operadores: string = "!&|()⇔⇒⊼⊻↓⊕";
-  opr2var: string = "|&⇔⇒⊼⊻↓⊕";
+  operadores: string = "!&|()⇔￩⇒⊼⊻↓⊕⇍⇏⇎";
+  opr2var: string = "|&⇔⇒⊼⊻↓⊕⇍⇏⇎";
   varMays: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   varNames: string = this.varMays + this.varMays.toLowerCase();
   tabla: any = [];
