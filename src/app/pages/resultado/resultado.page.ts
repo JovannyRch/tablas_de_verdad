@@ -55,12 +55,12 @@ export class ResultadoPage implements OnInit {
     });
 
     const bannerConfig: AdMobFreeBannerConfig = {
-      id: 'ca-app-pub-4665787383933447/6762703339',
+      id: 'ca-app-pub-4665787383933447/5006113274',
       isTesting: false,
       autoShow: true,
     };
     const videoConfig: AdMobFreeBannerConfig = {
-      id: 'ca-app-pub-4665787383933447/1334937592',
+      id: 'ca-app-pub-4665787383933447/2752426972',
       isTesting: false,
       autoShow: true,
     };
@@ -77,6 +77,7 @@ export class ResultadoPage implements OnInit {
     //this.capturarSolucion()
   }
 
+
   capturarSolucion() {
     if (this.compartiendo) return;
     if (!this.mostrarProceso) this.mostrarProceso = true;
@@ -87,7 +88,7 @@ export class ResultadoPage implements OnInit {
           this.imgSolution = new Image();
           this.imgSolution.src = dataUrl;
           //console.log(dataUrl);
-          this.socialSharing.share("Tabla de verdad de: " + this.infijaOrg, "Tabla de verdad", this.imgSolution.src);
+          this.socialSharing.share("Truth table of: " + this.infijaOrg, "Truth table", this.imgSolution.src);
           this.compartiendo = false;
         })
         .catch((error) => {
@@ -130,7 +131,7 @@ export class ResultadoPage implements OnInit {
     this.repositorio.create(registro);
     this.descripcion = "";
     this.guardarEnNube = false;
-    this.presentToast("Se ha guardado en la nube :D");
+    this.presentToast("Success! :D");
 
   }
 
@@ -188,7 +189,7 @@ export class ResultadoPage implements OnInit {
   checkChange01(x) {
     if (!this.conVsFs) {
       if (x == "0") return "F";
-      return "V";
+      return "T";
     }
     return x;
   }
@@ -228,10 +229,6 @@ export class ResultadoPage implements OnInit {
     this.verGuardadas = val;
   }
 
-
-
-
-
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
@@ -244,14 +241,16 @@ export class ResultadoPage implements OnInit {
     this.navCtrl.pop();
   }
 
+
+
   guardarExp() {
     if (this.infijaOrg) {
       if (this.expresionesGuardadas.includes(this.infijaOrg)) {
-        this.presentToast("Ya ha sido guardado previamente");
+        this.presentToast("Already has been saved previously");
       } else {
         this.expresionesGuardadas.push(this.infijaOrg);
         this.storage.set("expresiones", this.expresionesGuardadas);
-        this.presentToast("Guardado exitosamente :)");
+        this.presentToast("Saved! :D");
       }
     }
   }
@@ -449,16 +448,16 @@ export class ResultadoPage implements OnInit {
           b = pila.pop();
           let operator = this.opr2var[this.opr2var.indexOf(c)];
           if (["|", "∨"].includes(c)) {
-            nombre = `Disyunción`;
+            nombre = `Disjunction`;
           }
           else if (["&", "∧"].includes(c)) {
-            nombre = `Conjunción`;
+            nombre = `Conjunction`;
           }
           else if (["⇒"].includes(c)) {
-            nombre = `Condicional/Implicación`;
+            nombre = `Material Implication`;
           }
           else if (["⇔"].includes(c)) {
-            nombre = `Bicondicional/Doble implicación`;
+            nombre = `Material Equivalence`;
           }
           else if (["↓"].includes(c)) {
             nombre = "NOR";
@@ -466,33 +465,33 @@ export class ResultadoPage implements OnInit {
           else if (["⊼"].includes(c)) {
             nombre = "NAND";
           } else if (['￩'].includes(c)) {
-            nombre = "Condicional inverso/Replicador";
+            nombre = "Inverse conditional/Replier";
           }
 
           else if (["⊻", "⊕"].includes(c)) {
-            nombre = "XOR/Disyunción exclusiva";
+            nombre = "Exclusive Disjunction";
           }
           else if (['⇍'].includes(c)) {
-            nombre = "Negación del condicional inverso";
+            nombre = "Inverse Conditional Negation";
           }
           else if (['⇏'].includes(c)) {
-            nombre = "Negación del condicional";
+            nombre = "Implication Negation";
           }
           else if (['⇎'].includes(c)) {
-            nombre = "Negación del bicondicional/XOR";
+            nombre = "Equivalence negation/XOR";
           }
           else if (['┲'].includes(c)) {
-            nombre = "Tautología";
+            nombre = "Tautology";
           }
           else if (['┹'].includes(c)) {
-            nombre = "Contradicción";
+            nombre = "Contradiction";
           }
           htmlOper = ` ${b}<span class="operador-chido"> ${operator} </span>${a}`;
           oper = b + operator + a;
         }
 
         if (["!", "¬"].includes(c)) {
-          nombre = "Negación";
+          nombre = "Negation";
           htmlOper = `<span class="operador-chido"> ${c} </span>${a}`;
           oper = c + a;
         }
@@ -587,18 +586,18 @@ export class ResultadoPage implements OnInit {
     }
 
     if (cant1 == nCombinaciones) {
-      this.diagnostico = "Tautología";
+      this.diagnostico = "Tautology";
     }
 
     else if (cant0 == nCombinaciones) {
-      this.diagnostico = "Contradicción";
+      this.diagnostico = "Contradiction";
     }
 
     else {
-      this.diagnostico = "Contingencia";
+      this.diagnostico = "Contingency";
     }
 
-    console.log("variables: ", this.variables);
+    //console.log("variables: ", this.variables);
     if (this.miniterminos.length >= 1) {
 
       let kmap = new Kmap(this.miniterminos, this.variables);

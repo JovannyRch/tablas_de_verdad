@@ -27,8 +27,8 @@ export class HomePage implements OnInit, AfterViewInit {
       //statusBar.styleDefault();
       //splashScreen.hide();
       //this.pushAdmob();
-      this.mostrarBanner();
-      this.mostrarVideo();
+      //this.mostrarBanner();
+      //this.mostrarVideo();
     });
     this.backButtonEvent();
   }
@@ -49,20 +49,20 @@ export class HomePage implements OnInit, AfterViewInit {
   expresionesGuardadas: any = [];
   ngOnInit() {
     const bannerConfig: AdMobFreeBannerConfig = {
-      id: 'ca-app-pub-4665787383933447/6762703339',
+      id: 'ca-app-pub-4665787383933447/5006113274',
       isTesting: false,
       autoShow: true,
     };
     const videoConfig: AdMobFreeBannerConfig = {
-      id: 'ca-app-pub-4665787383933447/1334937592',
+      id: 'ca-app-pub-4665787383933447/2752426972',
       isTesting: false,
       autoShow: true,
     };
     this.admobFree.banner.config(bannerConfig);
     this.admobFree.rewardVideo.config(videoConfig);
-
-
-
+    setTimeout(() => {
+      this.mostrarBanner();
+    }, 2000);
   }
 
   mostrarBanner() {
