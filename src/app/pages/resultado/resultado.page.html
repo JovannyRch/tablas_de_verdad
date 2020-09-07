@@ -68,7 +68,7 @@
   </div>
 
 
-  <div *ngIf="ok" class="ion-padding" id="solucion" #solucion style="background-color: white;">
+  <div *ngIf="ok" class="ion-padding" id="solucion" #solucion>
 
 
 
@@ -104,7 +104,7 @@
 
       </ion-row>
       <div class="ion-text-center">
-        <h3>Tabla Final</h3>
+        <h5>Tabla Final</h5>
       </div>
       <div class="ion-text-right" *ngIf="!compartiendo && isApp">
         <ion-button (click)="capturarSolucion()" fill="clear" color="vibrant">
@@ -154,7 +154,7 @@
 
     <div *ngIf="mostrarProceso ">
       <div class="ion-text-center">
-        <h3>Pasos</h3>
+        <h5>Pasos</h5>
       </div>
       <ion-grid fixed class="ion-text-center" *ngFor="let p of proceso;let i=index" style="margin-top: 10px;">
         <i style="font-size: 0.8em;"><i>Paso {{i+1}}:</i> <b> {{ p.nombre }}</b></i>

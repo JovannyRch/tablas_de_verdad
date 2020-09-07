@@ -37,12 +37,13 @@
       </ion-row>
       <ion-row style="height: 15vh;">
         <ion-col size="12"
-          style="text-align: right; padding-top: 15%; padding-left: 4%; padding-right: 4%; font-size: 180%">
+          style="text-align: right; padding-top: 15%; padding-left: 4%; padding-right: 4%; font-size: 180%"
+          class="display">
           {{ infija }}
         </ion-col>
       </ion-row>
-      <ion-row style="height: 72vh" style="padding-top: 8%">
-        <ion-col size="9" style="background-color: rgb(255, 255, 255)">
+      <ion-row [style]="isApp? 'height: 72vh;padding-top: 8%;':'height: 65vh;padding-bottom: 8vh'">
+        <ion-col size="9">
 
           <ion-grid no-padding>
             <ion-row class="barra-top">

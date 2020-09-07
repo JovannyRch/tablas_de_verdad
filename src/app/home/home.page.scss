@@ -119,5 +119,35 @@ ion-chip{
 }
 
 
+@media(prefers-color-scheme: dark) {
+ 
+  .btn{
+    color: #cecece;
+    background-color: black;
+    
+  }
+  .btn-img{
+    color: #cecece;
+    background-color: #464646;
+  }
+  .btn-fm{
+    color: #cecece;
+    background-color: black;
+    
+  }
+  .display{
+    color: #cecece;
+    background-color: black;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    border-color: #8a8a8a;
+  }
+  ion-row{
+    color: #cecece;
+    background-color: black;
+  }
+  
+}
+
 
 

@@ -73,6 +73,31 @@ body{
     border: 1px solid rgb(226, 220, 205);
     background-color: rgb(253, 246, 228);
   }
+
+  @media(prefers-color-scheme: dark) {
+    ion-grid{
+      background-color: black !important;
+    }
+    
+    table tr:nth-child(even){background-color: #383838;}
+
+    
+  table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: rgb(255, 253, 249);
+    color: white;
+    border: 1px solid rgb(226, 220, 205);
+    background-color: rgb(73, 56, 40);
+  
+  }
+
+  table tr:hover {
+    background-color: rgb(112, 112, 112);
+  }
+
+  }
+
   .btn{
     height: 7vh;
     padding-top: 5%;
