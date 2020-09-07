@@ -11,6 +11,7 @@ export class AboutPage implements OnInit {
 
   constructor(private appVersion: AppVersion) { }
   version: string = "";
+  isApp: boolean = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
   ngOnInit() {
     this.appVersion.getVersionNumber().then(
       v => {

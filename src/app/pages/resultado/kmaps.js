@@ -1,24 +1,27 @@
 export class Kmap {
-    f: number[];
-    simplificacion: string;
 
-    d = [];
-    indexRow = [];
-    finalTable = [];
-    ans = [];
-    table2 = [];
-    res = "";
-    variables = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    varsUsed = [];
-    suma = "";
-    multiplicacion: string = "";
-    circuito = '';
-    notOperator: string = "";
-    andOperator: string = "";
-    orOperator: string = "";
-    variables2: string[] = [];
 
-    constructor(tablaverdad: number[], variables: string[], or: string = "∨", and: string = "∧", not: string = "¬") {
+    constructor(tablaverdad, variables, or = "∨", and = "∧", not = "¬") {
+
+        this.f = [];
+        this.simplificacion = "";
+
+        this.d = [];
+        this.indexRow = [];
+        this.finalTable = [];
+        this.ans = [];
+        this.table2 = [];
+        this.res = "";
+        this.variables = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        this.varsUsed = [];
+        this.suma = "";
+        this.multiplicacion = "";
+        this.circuito = '';
+        this.notOperator = "";
+        this.andOperator = "";
+        this.orOperator = "";
+        this.variables2 = [];
+
         this.f = tablaverdad.reverse();
         this.notOperator = not;
         this.orOperator = or;
@@ -266,7 +269,7 @@ export class Kmap {
 
     }
 
-    buildSuma(functions: any) {
+    buildSuma(functions) {
         let aux = [];
         for (let f of functions) {
             //console.log("f", f);
@@ -282,7 +285,7 @@ export class Kmap {
         return aux.join(" " + this.orOperator + " ");
     }
 
-    buildMultiplicacion(functions: any) {
+    buildMultiplicacion(functions) {
         //console.log(functions);
         let aux = [];
         for (let f of functions) {

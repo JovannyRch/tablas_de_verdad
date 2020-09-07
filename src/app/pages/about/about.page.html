@@ -11,11 +11,11 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col size="2"></ion-col>
-      <ion-col size="8">
-        <ion-img src="/assets/img/icon.png"></ion-img>
+      <ion-col size="8" class="ion-text-center">
+        <img src="/assets/img/icon.png" width="30%" />
       </ion-col>
       <ion-col size="2"></ion-col>
-      <ion-col size="12" class="ion-text-center">
+      <ion-col size="12" class="ion-text-center" *ngIf="isApp">
         Version: {{version || '1.0.3'}}
       </ion-col>
 
@@ -29,6 +29,11 @@
                 </b></h3>
               <br>
 
+              <div class="ion-text-center">
+                <ion-button href="http://www.jovannyrch.com" target="_blank" fill="clear" color="vibrant">
+                  www.jovannyrch.com
+                </ion-button>
+              </div>
               <ion-button href="https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad"
                 fill="clear" color="vibrant">
                 <ion-icon slot="start" name="star"></ion-icon> Califica la app
@@ -50,20 +55,20 @@
               Mira mis demás applicaciones <br>
               <ion-button color="vibrant" href="https://play.google.com/store/apps/dev?id=7909952332792194347&hl"
                 fill="clear">
-                <ion-icon slot="start" name="md-appstore"></ion-icon>
+                <ion-icon slot="start" name="logo-google-playstore"></ion-icon>
+
                 PLAYSTORE
               </ion-button>
               <br />
 
 
               ¿Cómo se hizo la app?<br>
-              <ion-button href="https://www.youtube.com/watch?v=anGBK3crHes" fill="clear" color="vibrant">
+              <ion-button href="https://www.youtube.com/watch?v=anGBK3crHes" target="_blank" fill="clear"
+                color="vibrant">
                 <ion-icon slot="start" name="logo-youtube"></ion-icon> Video
               </ion-button>
               <br>
-              <ion-button href="https://github.com/JovannyRch/tablas_de_verdad" fill="clear" color="vibrant">
-                <ion-icon slot="start" name="logo-github"></ion-icon> Codigo Fuente
-              </ion-button>
+
               <br />
               <br />
             </div>

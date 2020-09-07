@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content id="main-container" class="ion-justify-content-center ion-align-items-center no-scroll ">
 
 
   <ion-fab vertical="top" horizontal="end">
@@ -35,7 +35,7 @@
         </ion-col>
 
       </ion-row>
-      <ion-row style="height: 20vh;">
+      <ion-row style="height: 15vh;">
         <ion-col size="12"
           style="text-align: right; padding-top: 15%; padding-left: 4%; padding-right: 4%; font-size: 180%">
           {{ infija }}
@@ -92,14 +92,13 @@
               <span *ngIf="caseMm == 1">abc</span>
               <span *ngIf="caseMm == 0">ABC</span>
             </ion-col>
-            <ion-col size="12" style="font-size:small" (click)="setOpr(2)" class="borde btn-fm">∨∧¬</ion-col>
-            <ion-col size="12" (click)="setOpr(1)" class="borde btn-fm">|&!</ion-col>
+            <ion-col size="12" style="font-size:small" (click)="setOpr(2)" *ngIf="modo == 1" class="borde btn-fm">∨∧¬
+            </ion-col>
+            <ion-col size="12" (click)="setOpr(1)" *ngIf="modo == 2" class="borde btn-fm">|&!</ion-col>
 
           </ion-row>
           <ion-row class="operadores">
-
-
-
+            <ion-col class="btn borde" (click)="clickVar('~')" size="12">~</ion-col>
             <ion-col class="btn borde" (click)="clickVar(opers.not[modo])" size="12">{{opers.not[modo]}}</ion-col>
             <ion-col class="btn borde" (click)="clickVar(opers.or[modo])" size="12">{{opers.or[modo]}}</ion-col>
             <ion-col class="btn borde" (click)="clickVar(opers.and[modo])" size="12">{{opers.and[modo]}}</ion-col>

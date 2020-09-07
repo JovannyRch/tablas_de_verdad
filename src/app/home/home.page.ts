@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 
 import { ToastController, Platform, NavController } from '@ionic/angular';
 
@@ -27,10 +27,30 @@ export class HomePage implements OnInit, AfterViewInit {
       //statusBar.styleDefault();
       //splashScreen.hide();
       //this.pushAdmob();
-      this.mostrarBanner();
-      this.mostrarVideo();
+
+      // this.mostrarVideo();
     });
     this.backButtonEvent();
+  }
+
+  isApp: boolean = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (this.varNames.includes(event.key) || this.operadores.includes(event.key)) {
+      this.infija = this.infija + event.key;
+    } else {
+      console.log(event.keyCode);
+      if (event.keyCode == 8) {
+        this.infija = this.infija.substring(0, this.infija.length - 1);
+      }
+      else if (event.keyCode == 13) {
+        this.verResultado();
+      }
+      else if (event.keyCode == 46) {
+        this.infija = "";
+      }
+    }
   }
 
   backButtonEvent() {
@@ -58,10 +78,11 @@ export class HomePage implements OnInit, AfterViewInit {
       isTesting: false,
       autoShow: true,
     };
-    this.admobFree.banner.config(bannerConfig);
-    this.admobFree.rewardVideo.config(videoConfig);
-
-
+    if (this.isApp) {
+      this.admobFree.banner.config(bannerConfig);
+      this.admobFree.rewardVideo.config(videoConfig);
+      this.mostrarBanner();
+    }
 
   }
 
@@ -89,7 +110,7 @@ export class HomePage implements OnInit, AfterViewInit {
   indexPuntero = 0;
 
   variables: string[] = [];
-  operadores: string = "!&|()⇔￩⇒⊼⊻↓⊕⇍⇏⇎";
+  operadores: string = "!&|()⇔￩⇒⊼⊻↓⊕⇍⇏⇎~";
   opr2var: string = "|&⇔⇒⊼⊻↓⊕⇍⇏⇎";
   varMays: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   varNames: string = this.varMays + this.varMays.toLowerCase();
@@ -291,3 +312,5 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
 }
+
+

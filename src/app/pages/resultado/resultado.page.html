@@ -1,4 +1,5 @@
 <ion-content *ngIf="!guardarEnNube">
+
   <div *ngIf="!compartiendo">
     <ion-item>
 
@@ -36,18 +37,20 @@
     </div>
 
     <br>
-    <div class="ion-text-center">
+    <div class="ion-text-center" *ngIf="isApp">
       <ion-button href="https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad" fill="clear"
         color="vibrant">
         <ion-icon slot="start" name="star"></ion-icon> Califica la app
       </ion-button>
     </div>
     <div class="ion-text-center">
-      <ion-button href="https://www.facebook.com/groups/297802774663043" fill="clear" color="vibrant">
-        <ion-icon slot="start" name="logo-facebook"></ion-icon> ¿Dudas? unete al grupo
+      <ion-button href="https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad" target="_blank"
+        fill="clear" color="vibrant">
+        <ion-icon slot="start" name="logo-google-playstore"></ion-icon> Descarga la aplicación
+
       </ion-button>
     </div>
-    <div class="ion-text-center">
+    <div class="ion-text-center" *ngIf="isApp">
       <ion-button (click)="mostrarVideo()" fill="clear" color="vibrant">
         <ion-icon slot="start" name="cash-outline"></ion-icon> Apoyame dando clic en el anuncio
       </ion-button>
@@ -76,10 +79,15 @@
     </div>
 
     <br>
-    <i>La proposición es una <b>{{diagnostico}}</b></i>
+    <div class="ion-text-center">
+      <i>La proposición es una <b>{{diagnostico}}</b></i>
+    </div>
     <br>
     <ion-item class="ion-text-center">
-      <ion-label><b>{{infijaOrg}}</b></ion-label>
+      <ion-label>
+        <h1><b>{{infijaOrg}}</b></h1>
+
+      </ion-label>
     </ion-item>
 
 
@@ -95,7 +103,10 @@
         </ion-col>
 
       </ion-row>
-      <div class="ion-text-right" *ngIf="!compartiendo">
+      <div class="ion-text-center">
+        <h3>Tabla Final</h3>
+      </div>
+      <div class="ion-text-right" *ngIf="!compartiendo && isApp">
         <ion-button (click)="capturarSolucion()" fill="clear" color="vibrant">
           <ion-icon slot="start" name="share-social-sharp"></ion-icon> Compartir
         </ion-button>
@@ -122,7 +133,7 @@
         <ion-label class="ion-text-center"><b>{{ multiplicacion }}</b></ion-label>
       </ion-item>
 
-      <ion-row *ngIf="!compartiendo">
+      <!-- <ion-row *ngIf="!compartiendo">
         <ion-col size="12">
           <br><br>
           <ion-chip class="ion-text-center"
@@ -134,7 +145,7 @@
             </ion-label>
           </ion-chip>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <br *ngIf="!compartiendo" />
       <br *ngIf="!compartiendo" />
     </ion-grid>
@@ -142,7 +153,9 @@
 
 
     <div *ngIf="mostrarProceso ">
-
+      <div class="ion-text-center">
+        <h3>Pasos</h3>
+      </div>
       <ion-grid fixed class="ion-text-center" *ngFor="let p of proceso;let i=index" style="margin-top: 10px;">
         <i style="font-size: 0.8em;"><i>Paso {{i+1}}:</i> <b> {{ p.nombre }}</b></i>
         <table size="12">
@@ -189,7 +202,14 @@
 
 
   </div>
-
+  <br>
+  <br>
+  <div class="ion-text-right">
+    <ion-button href="http://www.jovannyrch.com" target="_blank" fill="clear" color="vibrant">
+      www.jovannyrch.com
+    </ion-button>
+  </div>
+  <br>
 </ion-content>
 
 <ion-content *ngIf="guardarEnNube" class="ion-padding">

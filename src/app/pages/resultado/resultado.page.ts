@@ -8,6 +8,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
 import { Kmap } from './kmaps';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { QuineMcCluskey } from "./quinemccluskey";
+
 
 //import html2canvas from 'html2canvas';
 
@@ -39,6 +41,7 @@ export class ResultadoPage implements OnInit {
   imgSolution: any;
   compartiendo: boolean = false;
   ngOnInit() {
+
     this.activeRoute.queryParams.subscribe(params => {
       this.infija = params['infija'];
     });
@@ -64,10 +67,12 @@ export class ResultadoPage implements OnInit {
       isTesting: false,
       autoShow: true,
     };
-    this.admobFree.rewardVideo.config(videoConfig);
-    this.admobFree.banner.config(bannerConfig);
-    this.mostrarVideo();
-    this.mostrarBanner();
+    if (this.isApp) {
+      this.admobFree.rewardVideo.config(videoConfig);
+      this.admobFree.banner.config(bannerConfig);
+      this.mostrarVideo();
+      this.mostrarBanner();
+    }
 
   }
 
@@ -146,7 +151,7 @@ export class ResultadoPage implements OnInit {
   historialOperaciones = [];
   keysOperaciones = [];
   variables: string[] = [];
-  operadores: string = "∨∧¬!&|()⇔⇒⊼⊻↓⊕￩⇏⇎⇍┹┲";
+  operadores: string = "∨∧¬!&|()⇔⇒⊼⊻↓⊕￩⇏⇎⇍┹┲~";
   simplificacion: string = "";
   suma: string = "";
   multiplicacion: string = "";
@@ -179,7 +184,7 @@ export class ResultadoPage implements OnInit {
   verGuardadas: boolean = false;
   mostrarProceso: boolean = false;
   ok: boolean = false;
-
+  isApp: boolean = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
   expresionesGuardadas: any = [];
   cambiar01() {
     this.conVsFs = !this.conVsFs;
@@ -345,6 +350,7 @@ export class ResultadoPage implements OnInit {
     this.infijaAux = this.infija;
     let prec = {};
     // "∨∧¬!&|()⇔⇒⊼⊻↓⊕"
+    prec['~'] = 16
     prec["!"] = 15;
     prec["¬"] = 15;
     prec["⊼"] = 14;
@@ -491,7 +497,7 @@ export class ResultadoPage implements OnInit {
           oper = b + operator + a;
         }
 
-        if (["!", "¬"].includes(c)) {
+        if (["!", "¬", "~"].includes(c)) {
           nombre = "Negación";
           htmlOper = `<span class="operador-chido"> ${c} </span>${a}`;
           oper = c + a;
@@ -598,25 +604,29 @@ export class ResultadoPage implements OnInit {
       this.diagnostico = "Contingencia";
     }
 
-    console.log("variables: ", this.variables);
-    if (this.miniterminos.length >= 1) {
+    /*  console.log("variables: ", this.variables);
+     if (this.variables.length <= 4) {
+       if (this.miniterminos.length >= this.maxiterminos.length) {
+         //let kmap = new QuineMcCluskey(this.variables, this.miniterminos, [], false);
+         //this.suma = kmap.getFunctionFormat();
+       } else {
+         //let kmap2 = new QuineMcCluskey(this.variables, this.maxiterminos, [], true);
+         //this.multiplicacion = kmap2.getFunctionFormat();
+       }
+       //let kmap = new QuineMcCluskey(this.variables, this.miniterminos, [], false);
+       //let kmap2 = new QuineMcCluskey(this.variables, this.maxiterminos, [], true);
+       //this.suma = kmap.getFunctionFormat();
+       ///this.multiplicacion = kmap2.getFunctionFormat();
+       // this.multiplicacion = `¬(${kmap.multiplicacion})`
+     } */
 
-      let kmap = new Kmap(this.miniterminos, this.variables);
-      this.suma = kmap.suma;
-      // this.multiplicacion = `¬(${kmap.multiplicacion})`
-    }
-    if (this.maxiterminos.length >= 1) {
-      let kmap2 = new Kmap(this.maxiterminos, this.variables);
-
-      this.multiplicacion = `¬[${kmap2.suma}]`;
-    }
     /*  if (this.modo == 2) {
        this.infija = this.replaceAll(this.infija, "&", "∧");
        this.infija = this.replaceAll(this.infija, "|", "∨");
        this.infija = this.replaceAll(this.infija, "!", "¬");
      } */
     this.infija = this.infijaOrg;
-
+    this.mostrarProceso = true;
 
   }
 
@@ -722,7 +732,7 @@ export class ResultadoPage implements OnInit {
 
 
         }
-        if (["!", "¬"].includes(c)) {
+        if (["!", "¬", "~"].includes(c)) {
           if (!this.notOperator) this.notOperator = c;
           resultado = this.not(a);
         }
