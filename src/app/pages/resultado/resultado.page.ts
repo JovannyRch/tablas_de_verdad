@@ -40,6 +40,10 @@ export class ResultadoPage implements OnInit {
   descripcion: string = "";
   imgSolution: any;
   compartiendo: boolean = false;
+  isPremium: boolean = true;
+
+  link: string = "https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad";
+
   ngOnInit() {
 
     this.activeRoute.queryParams.subscribe(params => {
@@ -67,7 +71,12 @@ export class ResultadoPage implements OnInit {
       isTesting: false,
       autoShow: true,
     };
-    if (this.isApp) {
+
+    if (this.isPremium) {
+      this.link = "https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad.pro";
+    }
+
+    if (this.isApp && !this.isPremium) {
       this.admobFree.rewardVideo.config(videoConfig);
       this.admobFree.banner.config(bannerConfig);
       this.mostrarVideo();
@@ -94,6 +103,9 @@ export class ResultadoPage implements OnInit {
           //console.log(dataUrl);
           this.socialSharing.share("Tabla de verdad de: " + this.infijaOrg, "Tabla de verdad", this.imgSolution.src);
           this.compartiendo = false;
+          if (!this.isPremium) {
+            this.mostrarVideo();
+          }
         })
         .catch((error) => {
           this.compartiendo = false;
@@ -184,7 +196,7 @@ export class ResultadoPage implements OnInit {
   verGuardadas: boolean = false;
   mostrarProceso: boolean = false;
   ok: boolean = false;
-  isApp: boolean = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+  isApp: boolean = !((!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')));
   expresionesGuardadas: any = [];
   cambiar01() {
     this.conVsFs = !this.conVsFs;
@@ -343,6 +355,8 @@ export class ResultadoPage implements OnInit {
 
     this.infija = this.replaceAll(this.infija, '[', '(');
     this.infija = this.replaceAll(this.infija, ']', ')');
+    this.infija = this.replaceAll(this.infija, '{', '(');
+    this.infija = this.replaceAll(this.infija, '}', ')');
 
     this.clearMem();
 

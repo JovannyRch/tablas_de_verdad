@@ -17,7 +17,7 @@
 
   <div class="ion-text-center">
 
-    <ion-grid no-padding style="height: 100vh; background-color: rgb(255, 253, 249);">
+    <ion-grid no-padding [style]="isApp?'height: 100vh;':'height: 120vh;'">
       <ion-row style="height: 5vh;">
         <ion-col size="12" class="ion-text-left">
           <ion-chip style="font-size:12px" routerLink="/memoria" color="vibrant">
@@ -51,7 +51,7 @@
                 <ion-icon style="zoom:1.5;" name="trash" style="padding-top: 10%"></ion-icon>
               </ion-col>
               <ion-col (click)="delete()" size="3" class="borde btn-img ion-text-center ion-justify-content-center">
-                <ion-img src="assets/img/delete.png" style="width: 60%; margin-left: 10%"></ion-img>
+                <ion-img src="assets/img/delete.png" style="width: 55%; margin-left: 10%"></ion-img>
               </ion-col>
               <ion-col (click)="clickVar('(')" size="3" class="borde btn">(</ion-col>
               <ion-col (click)="clickVar(')')" size="3" class="borde btn">)</ion-col>
@@ -62,11 +62,17 @@
               <ion-col *ngFor="let l of letras" (click)="clickVar(l[caseMm])" size="3" class="borde btn">
                 {{l[caseMm]}}
               </ion-col>
-              <ion-col size="3" (click)="clickVar('[')" class="btn borde operador">
+              <ion-col size="1" (click)="clickVar('[')" class="btn borde operador">
                 [
               </ion-col>
-              <ion-col size="3" (click)="clickVar(']')" class="btn borde  operador">
+              <ion-col size="1" (click)="clickVar(']')" class="btn borde  operador">
                 ]
+              </ion-col>
+              <ion-col size="2" (click)="clickCorchetes(0)" class="btn borde operador">
+                {{ '{' }}
+              </ion-col>
+              <ion-col size="2" (click)="clickCorchetes(1)" class="btn borde  operador">
+                {{ '}' }}
               </ion-col>
 
 

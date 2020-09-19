@@ -53,6 +53,15 @@ export class HomePage implements OnInit, AfterViewInit {
     }
   }
 
+  clickCorchetes(val) {
+    if (val == 0) {
+      this.clickVar("{");
+    }
+    else {
+      this.clickVar("}");
+    }
+  }
+
   backButtonEvent() {
     document.addEventListener("backbutton", () => {
       console.log(this.router.url);
@@ -78,7 +87,7 @@ export class HomePage implements OnInit, AfterViewInit {
       isTesting: false,
       autoShow: true,
     };
-    if (this.isApp) {
+    if (this.isApp && !this.isPremium) {
       this.admobFree.banner.config(bannerConfig);
       this.admobFree.rewardVideo.config(videoConfig);
       this.mostrarBanner();
@@ -108,6 +117,7 @@ export class HomePage implements OnInit, AfterViewInit {
   infijaOrg: string = "";
   infijaAux: string = "";
   indexPuntero = 0;
+  isPremium: boolean = true;
 
   variables: string[] = [];
   operadores: string = "!&|()⇔￩⇒⊼⊻↓⊕⇍⇏⇎~";

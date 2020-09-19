@@ -36,23 +36,42 @@
       </ion-chip> -->
     </div>
 
-    <br>
     <div class="ion-text-center" *ngIf="isApp">
-      <ion-button href="https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad" fill="clear"
-        color="vibrant">
+      <ion-button [href]="link" fill="clear" color="vibrant">
         <ion-icon slot="start" name="star"></ion-icon> Califica la app
       </ion-button>
     </div>
-    <div class="ion-text-center">
-      <ion-button href="https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad" target="_blank"
-        fill="clear" color="vibrant">
+    <div class="ion-text-center" *ngIf="!isApp">
+      <ion-button [href]="link" target="_blank" fill="clear" color="vibrant">
         <ion-icon slot="start" name="logo-google-playstore"></ion-icon> Descarga la aplicación
 
       </ion-button>
     </div>
-    <div class="ion-text-center" *ngIf="isApp">
+    <div class="ion-text-center" *ngIf="isApp && !isPremium">
       <ion-button (click)="mostrarVideo()" fill="clear" color="vibrant">
         <ion-icon slot="start" name="cash-outline"></ion-icon> Apoyame dando clic en el anuncio
+      </ion-button>
+    </div>
+
+    <div class="ion-text-center" *ngIf="isApp && !isPremium">
+      <ion-button (click)="mostrarVideo()" color="vibrant">
+        <ion-icon slot="start" name="heart"></ion-icon> Versión PRO
+      </ion-button>
+      <br><small>Sin anuncios</small>
+      <br><small>Recibe asesoría personalizada</small>
+      <br><small>Versión web y de escritorio</small>
+    </div>
+
+
+    <div class="ion-text-center" *ngIf="isPremium">
+      <ion-button href="https://wa.me/527226227577" fill="clear" color="vibrant">
+        <ion-icon slot="start" name="chatbubbles"></ion-icon> Solicitar asesoría
+      </ion-button>
+    </div>
+
+    <div class="ion-text-center" *ngIf="isPremium">
+      <ion-button href="https://www.tablasdeverdad.com" fill="clear" color="vibrant">
+        <ion-icon slot="start" name="desktop"></ion-icon> Versión de escritorio
       </ion-button>
     </div>
 
@@ -80,12 +99,14 @@
 
     <br>
     <div class="ion-text-center">
-      <i>La proposición es una <b>{{diagnostico}}</b></i>
+      <small><i>La proposición es una </i></small>
+      <br>
+      <b>{{diagnostico}}</b>
     </div>
     <br>
     <ion-item class="ion-text-center">
       <ion-label>
-        <h1><b>{{infijaOrg}}</b></h1>
+        <b>{{infijaOrg}}</b>
 
       </ion-label>
     </ion-item>
@@ -104,7 +125,7 @@
 
       </ion-row>
       <div class="ion-text-center">
-        <h5>Tabla Final</h5>
+        <h6>Tabla Final</h6>
       </div>
       <div class="ion-text-right" *ngIf="!compartiendo && isApp">
         <ion-button (click)="capturarSolucion()" fill="clear" color="vibrant">
@@ -152,7 +173,7 @@
 
 
 
-    <div *ngIf="mostrarProceso ">
+    <div *ngIf="mostrarProceso &&  proceso.length != 0">
       <div class="ion-text-center">
         <h5>Pasos</h5>
       </div>
