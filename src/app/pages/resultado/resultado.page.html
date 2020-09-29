@@ -54,20 +54,21 @@
     </div>
 
     <div class="ion-text-center" *ngIf="isApp && !isPremium">
-      <ion-button (click)="mostrarVideo()" color="vibrant">
+      <ion-button [href]="link+'.pro'" color="vibrant">
         <ion-icon slot="start" name="heart"></ion-icon> Versión PRO
       </ion-button>
       <br><small>Sin anuncios</small>
-      <br><small>Recibe asesoría personalizada</small>
+      <br><small>Apoya el proyecto</small>
+      <!--  <br><small>Recibe asesoría personalizada</small> -->
       <br><small>Versión web y de escritorio</small>
     </div>
 
 
-    <div class="ion-text-center" *ngIf="isPremium">
+    <!--  <div class="ion-text-center" *ngIf="isPremium">
       <ion-button href="https://wa.me/527226227577" fill="clear" color="vibrant">
         <ion-icon slot="start" name="chatbubbles"></ion-icon> Solicitar asesoría
       </ion-button>
-    </div>
+    </div> -->
 
     <div class="ion-text-center" *ngIf="isPremium">
       <ion-button href="https://www.tablasdeverdad.com" fill="clear" color="vibrant">

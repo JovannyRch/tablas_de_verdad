@@ -35,12 +35,14 @@ export class ResultadoPage implements OnInit {
 
   ) { }
 
+  isApp: boolean = !((!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')));
+  isPremium: boolean = !false;
   expresion: any;
   guardarEnNube: boolean = false;
   descripcion: string = "";
   imgSolution: any;
   compartiendo: boolean = false;
-  isPremium: boolean = true;
+
 
   link: string = "https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad";
 
@@ -196,7 +198,7 @@ export class ResultadoPage implements OnInit {
   verGuardadas: boolean = false;
   mostrarProceso: boolean = false;
   ok: boolean = false;
-  isApp: boolean = !((!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')));
+
   expresionesGuardadas: any = [];
   cambiar01() {
     this.conVsFs = !this.conVsFs;

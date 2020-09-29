@@ -33,7 +33,9 @@ export class HomePage implements OnInit, AfterViewInit {
     this.backButtonEvent();
   }
 
-  isApp: boolean = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+  isApp: boolean = !(!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+  isPremium: boolean = !false;
+
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -117,7 +119,6 @@ export class HomePage implements OnInit, AfterViewInit {
   infijaOrg: string = "";
   infijaAux: string = "";
   indexPuntero = 0;
-  isPremium: boolean = true;
 
   variables: string[] = [];
   operadores: string = "!&|()⇔￩⇒⊼⊻↓⊕⇍⇏⇎~";
