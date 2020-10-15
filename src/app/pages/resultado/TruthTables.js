@@ -17,7 +17,7 @@ export class TablaVerdad {
 
         this.toPostfix();
         this.calcularTabla();
-
+        this.error = true;
     }
 
     toPostfix() {
@@ -35,15 +35,14 @@ export class TablaVerdad {
                 postfixList.push(caracter);
             }
             else if (caracter === '(') {
-
                 opStack.push(caracter);
-
             }
             else if (caracter === ')') {
                 let topToken = opStack.pop();
-                while (topToken != "(") {
+                while (topToken != "(" && opStack.length > 0) {
                     postfixList.push(topToken);
                     topToken = opStack.pop();
+                    //Throw error
                 }
             } else {
 
@@ -97,16 +96,10 @@ export class TablaVerdad {
     }
 
     sustituir(combinacion, postfija) {
-        let auxPost = postfija;
-        for (const caracter of auxPost) {
-            if (caracter == "1" || caracter == "0") {
-                continue;
-            }
-            else if (this.variables.includes(caracter)) {
-                auxPost = this.replaceAll(auxPost, caracter, combinacion[this.variables.indexOf(caracter)]);
-            }
+        for (const i in this.variables) {
+            postfija = this.replaceAll(postfija, this.variables[i], combinacion[i]);
         }
-        return auxPost;
+        return postfija;
     }
 
     replaceAll(str, find, replace) {

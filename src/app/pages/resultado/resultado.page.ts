@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Storage } from '@ionic/storage';
 import { ToastController, Platform, NavController } from '@ionic/angular';
 
@@ -27,7 +27,7 @@ export class ResultadoPage implements OnInit {
     private storage: Storage,
     public toastController: ToastController,
     private admobFree: AdMobFree,
-
+    private router: Router,
     private navCtrl: NavController,
     private repositorio: RepositorioService,
     private sanitizer: DomSanitizer,
@@ -35,8 +35,8 @@ export class ResultadoPage implements OnInit {
 
   ) { }
 
-  isApp: boolean = !((!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')));
-  isPremium: boolean = !false;
+  isApp: boolean = (document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+  isPremium: boolean = false;
   expresion: any;
   guardarEnNube: boolean = false;
   descripcion: string = "";
@@ -50,39 +50,45 @@ export class ResultadoPage implements OnInit {
 
     this.activeRoute.queryParams.subscribe(params => {
       this.infija = params['infija'];
+      this.postfija = params['postfija'];
     });
+    this.infijaOrg = this.infija;
     this.desc = this.activeRoute.snapshot.paramMap.get("desc");
     this.verExp(this.infija);
-    this.toPostfix();
+    this.generarTabla();
+    //this.toPostfix();
 
-    this.storage.get('expresiones').then((val) => {
-      if (val) {
-        this.expresionesGuardadas = val;
-      } else {
-        this.storage.set('expresiones', this.expresionesGuardadas);
+
+    if (!this.error) {
+      this.storage.get('expresiones').then((val) => {
+        if (val) {
+          this.expresionesGuardadas = val;
+        } else {
+          this.storage.set('expresiones', this.expresionesGuardadas);
+        }
+      });
+
+      const bannerConfig: AdMobFreeBannerConfig = {
+        id: 'ca-app-pub-4665787383933447/6762703339',
+        isTesting: false,
+        autoShow: true,
+      };
+      const videoConfig: AdMobFreeBannerConfig = {
+        id: 'ca-app-pub-4665787383933447/1334937592',
+        isTesting: false,
+        autoShow: true,
+      };
+
+      if (this.isPremium) {
+        this.link = "https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad.pro";
       }
-    });
 
-    const bannerConfig: AdMobFreeBannerConfig = {
-      id: 'ca-app-pub-4665787383933447/6762703339',
-      isTesting: false,
-      autoShow: true,
-    };
-    const videoConfig: AdMobFreeBannerConfig = {
-      id: 'ca-app-pub-4665787383933447/1334937592',
-      isTesting: false,
-      autoShow: true,
-    };
-
-    if (this.isPremium) {
-      this.link = "https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad.pro";
-    }
-
-    if (this.isApp && !this.isPremium) {
-      this.admobFree.rewardVideo.config(videoConfig);
-      this.admobFree.banner.config(bannerConfig);
-      this.mostrarVideo();
-      this.mostrarBanner();
+      if (this.isApp && !this.isPremium) {
+        this.admobFree.rewardVideo.config(videoConfig);
+        this.admobFree.banner.config(bannerConfig);
+        this.mostrarVideo();
+        this.mostrarBanner();
+      }
     }
 
   }
@@ -198,6 +204,7 @@ export class ResultadoPage implements OnInit {
   verGuardadas: boolean = false;
   mostrarProceso: boolean = false;
   ok: boolean = false;
+  error: boolean = false;
 
   expresionesGuardadas: any = [];
   cambiar01() {
@@ -405,9 +412,16 @@ export class ResultadoPage implements OnInit {
       }
       else if (caracter === ')') {
         let topToken = opStack.pop();
+        /* if (!opStack.includes("(")) {
+          this.error = true;
+          this.router.navigateByUrl('/');
+          return;
+        } */
         while (topToken != "(") {
           postfixList.push(topToken);
-          topToken = opStack.pop();
+          if (opStack.length != 0) {
+            topToken = opStack.pop();
+          }
         }
       } else {
 
@@ -646,7 +660,7 @@ export class ResultadoPage implements OnInit {
 
   }
 
-  sustituir(combinacion, postfija) {
+  /* sustituir(combinacion, postfija) {
     let auxPost = postfija;
     for (const caracter of auxPost) {
       if (caracter == "1" || caracter == "0") {
@@ -657,6 +671,13 @@ export class ResultadoPage implements OnInit {
       }
     }
     return auxPost;
+  } */
+
+  sustituir(combinacion, postfija) {
+    for (const i in this.variables) {
+      postfija = this.replaceAll(postfija, this.variables[i], combinacion[i]);
+    }
+    return postfija;
   }
 
   nBits(bin, n) {

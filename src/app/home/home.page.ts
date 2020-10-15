@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 
-import { ToastController, Platform, NavController } from '@ionic/angular';
+import { ToastController, Platform, NavController, AlertController } from '@ionic/angular';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -21,6 +21,7 @@ export class HomePage implements OnInit, AfterViewInit {
     splashScreen: SplashScreen,
     public navCtrl: NavController,
     private router: Router,
+    public alertController: AlertController
 
   ) {
     platform.ready().then(() => {
@@ -33,8 +34,8 @@ export class HomePage implements OnInit, AfterViewInit {
     this.backButtonEvent();
   }
 
-  isApp: boolean = !(!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
-  isPremium: boolean = !false;
+  isApp: boolean = (document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+  isPremium: boolean = false;
 
 
   @HostListener('window:keyup', ['$event'])
@@ -121,8 +122,8 @@ export class HomePage implements OnInit, AfterViewInit {
   indexPuntero = 0;
 
   variables: string[] = [];
-  operadores: string = "!&|()⇔￩⇒⊼⊻↓⊕⇍⇏⇎~";
-  opr2var: string = "|&⇔⇒⊼⊻↓⊕⇍⇏⇎";
+  operadores: string = "∨∧¬!&|()⇔⇒⊼⊻↓⊕￩⇏⇎⇍┹┲~";
+  opr2var: string = "∨∧⇔⇒⊼⊻↓⊕|&￩⇏⇎⇍┹┲";
   varMays: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   varNames: string = this.varMays + this.varMays.toLowerCase();
   tabla: any = [];
@@ -302,25 +303,196 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   verResultado() {
-    //'/resultado/'+infija
-    console.log(this.infija);
-    if (this.validar()) {
-      /*  let random = Math.random() * 100;
-       console.log(random);
-       if (random >= 69) {
-        
-       } */
-      let navigationExtras: NavigationExtras = {
-        queryParams: { infija: this.infija }
-      };
-      this.router.navigate(["resultado"], navigationExtras);
-    }
+    this.toPostfix();
   }
 
   validar() {
     if (this.infija === "") return false;
     return true;
   }
+
+  check(infija: string) {
+    let res = "";
+    for (let i = 0; i < infija.length - 1; i++) {
+      let c = infija[i];
+      let cNext = infija[i + 1];
+      if ((cNext === "¬" && this.varNames.includes(c))) {
+
+        res += c + "∧";
+      }
+      else if (c === ")" && cNext === "!") {
+
+        res += c + "∧";
+      }
+      else if (c === ")" && cNext === "(") {
+
+        res += c + "∧";
+      }
+      else if (this.varNames.includes(c) && this.varNames.includes(cNext)) {
+
+        res += c + "∧";
+      }
+      else if (this.varNames.includes(c) && cNext === "(") {
+
+        res += c + "∧";
+      }
+      else {
+        res += c
+      }
+
+    }
+    let lastC = infija[infija.length - 1];
+    return res + lastC;
+  }
+
+  async presentAlert(title: string, message: string) {
+    const alert = await this.alertController.create({
+
+      header: title,
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  toPostfix() {
+    this.ok = false;
+
+    this.infijaOrg = this.infija;
+
+    this.infijaOrg = this.replaceAll(this.infijaOrg, '[', '(');
+    this.infijaOrg = this.replaceAll(this.infijaOrg, ']', ')');
+    this.infijaOrg = this.replaceAll(this.infijaOrg, '{', '(');
+    this.infijaOrg = this.replaceAll(this.infijaOrg, '}', ')');
+
+    this.clearMem();
+
+    /* this.infijaOrg = this.check(this.infijaOrg); */
+    this.infijaAux = this.infijaOrg;
+    let prec = {};
+    // "∨∧¬!&|()⇔⇒⊼⊻↓⊕"
+    prec['~'] = 16
+    prec["!"] = 15;
+    prec["¬"] = 15;
+    prec["⊼"] = 14;
+    prec["⊻"] = 13;
+    prec["⊕"] = 12;
+    prec["↓"] = 11;
+    prec["&"] = 10;
+    prec["∧"] = 10;
+    prec["|"] = 9;
+    prec["∨"] = 9;
+    prec['⇍'] = 8;
+
+    prec['￩'] = 7;
+    prec['⇏'] = 6;
+    prec['⇎'] = 5;
+    prec['⇎'] = 5;
+    prec['┲'] = 4;
+    prec['┹'] = 3;
+
+    prec["⇒"] = 2;
+    prec["⇔"] = 1;
+
+    prec["("] = 0;
+
+    let opStack = [];
+    let postfixList = [];
+
+    for (let i = 0; i < this.infijaOrg.length; i++) {
+      const caracter = this.infijaOrg[i];
+      if (!this.operadores.includes(caracter)) {
+        postfixList.push(caracter);
+      }
+      else if (caracter === '(') {
+
+        opStack.push(caracter);
+        if (!this.infijaOrg.substr(i + 1).includes(')')) {
+          this.presentAlert("Error de sintaxis", "Parentesis incompleto, falta un ')'");
+          return;
+        }
+
+      }
+      else if (caracter === ')') {
+        let topToken = opStack.pop();
+        if (!opStack.includes("(")) {
+          this.presentAlert("Error de sintaxis", "Parentesis incompleto, falta un '('");
+          return;
+        }
+        while (topToken != "(") {
+          postfixList.push(topToken);
+          if (opStack.length != 0) {
+            topToken = opStack.pop();
+          }
+        }
+      } else {
+
+        while (opStack.length != 0 && (prec[opStack[opStack.length - 1]] > prec[caracter])) {
+          postfixList.push(opStack.pop())
+        }
+        opStack.push(caracter);
+      }
+    }
+    while (opStack.length > 0) {
+      postfixList.push(opStack.pop());
+    }
+    this.postfija = "";
+    this.postfija = postfixList.join("");
+    if (this.evaluar(this.postfija)) {
+      let navigationExtras: NavigationExtras = {
+        queryParams: { infija: this.infija, postfija: this.postfija }
+      };
+      this.router.navigate(["resultado"], navigationExtras);
+    }
+
+    //return strPostfix;
+
+  }
+
+  evaluar(expresion: string): boolean {
+    let pila = [];
+    for (let i = 0; i < expresion.length; i++) {
+      let c = expresion[i];
+      if (this.operadores.includes(c)) {
+        // Evaluar
+        if (pila.length == 0) {
+          if (this.opr2var.includes(c)) {
+            this.presentAlert("Error de sintaxis", `El operador ${c} necesita dos operandos`);
+          } else {
+            this.presentAlert("Error de sintaxis", `El operador ${c} necesita 1 operando`);
+          }
+          return false;
+        }
+        let a = parseInt(pila.pop());
+        let resultado;
+        if (this.opr2var.includes(c)) {
+
+          if (pila.length == 0) {
+            this.presentAlert("Error de sintaxis", `El operador ${c} necesita 2 operandos`);
+            return false;
+          }
+          let b = parseInt(pila.pop());
+          resultado = "9";
+        }
+        if (["!", "¬", "~"].includes(c)) {
+          resultado = "9";
+        }
+        pila.push(resultado);
+      } else {
+        pila.push(c);
+      }
+    }
+
+    if (pila.length == 1) {
+      return true;
+    }
+    else {
+      this.presentAlert("Error de sintaxis", `La proposición lógica no está bien formada`);
+      return false;
+    }
+  }
+
 
 }
 
